@@ -13,9 +13,20 @@ export default function Home() {
   useEffect(() => {
     // 初期値の設定
     const now = new Date()
-    setCurrentTime(now)
-    setManualTime(now)
 
+    // 現在時刻
+    setCurrentTime(now)
+    // 1秒ごとに更新する
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 1000)
+
+    // 手動時刻
+    const manualInitialTime = new Date()
+    manualInitialTime.setHours(22, 0, 0, 0)
+    setManualTime(manualInitialTime)
+
+    // 起床時刻
     const target = new Date()
     target.setHours(7, 0, 0, 0)
     if (now.getHours() >= 7) {
@@ -23,10 +34,6 @@ export default function Home() {
     }
     setWakeUpTime(target)
 
-    // 現在時刻を1秒ごとに更新
-    const timer = setInterval(() => {
-      setCurrentTime(new Date())
-    }, 1000)
     return () => clearInterval(timer)
   }, [])
 
@@ -72,16 +79,15 @@ export default function Home() {
               className='w-full p-2 border rounded'
             />
           </div>
-
           <div>
-            <label className='block mb-2'>時間設定:</label>
+            <label className='block mb-2'>時刻設定:</label>
             <div className='flex gap-4'>
               <label>
                 <input
                   type='radio'
                   checked={useCurrentTime}
                   onChange={() => setUseCurrentTime(true)}
-                />{' '}
+                />
                 現在時刻を使用
               </label>
               <label>
@@ -89,8 +95,8 @@ export default function Home() {
                   type='radio'
                   checked={!useCurrentTime}
                   onChange={() => setUseCurrentTime(false)}
-                />{' '}
-                時間を指定
+                />
+                時刻を指定
               </label>
             </div>
             <input
@@ -113,7 +119,7 @@ export default function Home() {
           </div>
 
           <div>
-            <label className='block mb-2'>起床時間:</label>
+            <label className='block mb-2'>起床時刻:</label>
             <input
               type='datetime-local'
               value={
@@ -133,7 +139,7 @@ export default function Home() {
             <p
               className={`font-bold ${isOk ? 'text-green-600' : 'text-red-600'}`}
             >
-              判定: {isOk ? 'OK' : 'NG'}
+              {isOk ? '交換OK!' : '交換NG'}
             </p>
           </div>
         </div>

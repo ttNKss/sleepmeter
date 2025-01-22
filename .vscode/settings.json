@@ -13,5 +13,5 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "cSpell.words": ["tailwindcss"]
+  "cSpell.words": ["genki", "tailwindcss"]
 }
