@@ -1,7 +1,16 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  experimental: {
+    turbo: {
+      rules: {
+        // Google Fontsの設定を有効化
+        '@next/font/google': {
+          loaders: ['default']
+        }
+      }
+    }
+  }
+}
 
-export default nextConfig;
+export default nextConfig

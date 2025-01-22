@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [genki, setGenki] = useState<number>(100)
-  const [useCurrentTime, setUseCurrentTime] = useState<boolean>(true)
+  const [useCurrentTime, setUseCurrentTime] = useState<boolean>(false)
   const [currentTime, setCurrentTime] = useState<Date | null>(null)
   const [manualTime, setManualTime] = useState<Date | null>(null)
   const [wakeUpTime, setWakeUpTime] = useState<Date | null>(null)
@@ -65,38 +65,49 @@ export default function Home() {
   }
 
   return (
-    <div className='grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]'>
-      <main className='flex flex-col gap-8 row-start-2 items-center sm:items-start'>
-        <div className='flex flex-col gap-4 w-full max-w-md'>
-          <div>
-            <label className='block mb-2'>現在のげんき（0-150%）:</label>
+    <div className='min-h-screen bg-base-100 p-8 pb-20 sm:p-20'>
+      <main className='container mx-auto'>
+        <div className='card bg-base-200 shadow-xl max-w-md mx-auto p-6'>
+          <div className='form-control w-full'>
+            <label className='label'>
+              <span className='label-text'>現在のげんき（0-150%）:</span>
+            </label>
             <input
-              type='number'
+              type='range'
               min='0'
               max='150'
               value={genki}
               onChange={e => setGenki(Number(e.target.value))}
-              className='w-full p-2 border rounded'
+              className='range range-primary'
             />
+            <div className='text-center mt-2'>
+              <span className='text-2xl font-bold'>{genki}%</span>
+            </div>
           </div>
-          <div>
-            <label className='block mb-2'>時刻設定:</label>
+          <div className='form-control w-full mt-4'>
+            <label className='label'>
+              <span className='label-text'>時刻設定:</span>
+            </label>
             <div className='flex gap-4'>
-              <label>
+              <label className='label cursor-pointer'>
                 <input
                   type='radio'
-                  checked={useCurrentTime}
-                  onChange={() => setUseCurrentTime(true)}
-                />
-                現在時刻を使用
-              </label>
-              <label>
-                <input
-                  type='radio'
+                  name='time-setting'
+                  className='radio radio-primary'
                   checked={!useCurrentTime}
                   onChange={() => setUseCurrentTime(false)}
                 />
-                時刻を指定
+                <span className='label-text ml-2'>時刻を指定</span>
+              </label>
+              <label className='label cursor-pointer'>
+                <input
+                  type='radio'
+                  name='time-setting'
+                  className='radio radio-primary'
+                  checked={useCurrentTime}
+                  onChange={() => setUseCurrentTime(true)}
+                />
+                <span className='label-text ml-2'>現在時刻を使用</span>
               </label>
             </div>
             <input
@@ -110,16 +121,18 @@ export default function Home() {
                 setManualTime(new Date(e.target.value))
               }}
               disabled={useCurrentTime}
-              className='w-full p-2 border rounded mt-2'
+              className='input input-bordered w-full mt-2'
             />
-            <p className='mt-2 text-sm text-gray-600'>
+            <p className='text-sm opacity-70 mt-2'>
               現在時刻:{' '}
               {currentTime?.toLocaleString('ja-JP') || '読み込み中...'}
             </p>
           </div>
 
-          <div>
-            <label className='block mb-2'>起床時刻:</label>
+          <div className='form-control w-full mt-4'>
+            <label className='label'>
+              <span className='label-text'>起床時刻:</span>
+            </label>
             <input
               type='datetime-local'
               value={
@@ -130,17 +143,19 @@ export default function Home() {
               onChange={e => {
                 setWakeUpTime(new Date(e.target.value))
               }}
-              className='w-full p-2 border rounded'
+              className='input input-bordered w-full'
             />
           </div>
 
-          <div className='mt-4 p-4 bg-gray-100 rounded'>
-            <p>予測げんき: {predictedGenki}%</p>
-            <p
-              className={`font-bold ${isOk ? 'text-green-600' : 'text-red-600'}`}
-            >
-              {isOk ? '交換OK!' : '交換NG'}
-            </p>
+          <div className='alert mt-6'>
+            <div>
+              <h3 className='font-bold'>予測げんき: {predictedGenki}%</h3>
+              <div
+                className={`text-lg ${isOk ? 'text-success' : 'text-error'}`}
+              >
+                {isOk ? '交換OK!' : '交換NG'}
+              </div>
+            </div>
           </div>
         </div>
       </main>
