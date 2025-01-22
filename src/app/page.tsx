@@ -129,7 +129,7 @@ export default function Home() {
           </div>
 
           <div className='mt-4 p-4 bg-gray-100 rounded'>
-            <p>予想げんき: {predictedGenki}%</p>
+            <p>予測げんき: {predictedGenki}%</p>
             <p
               className={`font-bold ${isOk ? 'text-green-600' : 'text-red-600'}`}
             >
