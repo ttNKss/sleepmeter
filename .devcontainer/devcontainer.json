@@ -1,0 +1,25 @@
+{
+  "name": "sleepmeter",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/pnpm:2": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // git
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        // editor
+        "biomejs.biome",
+        "streetsidesoftware.code-spell-checker",
+        "shardulm94.trailing-spaces",
+        // ops
+        "GitHub.vscode-pull-request-github",
+        "github.vscode-github-actions"
+      ]
+    }
+  },
+  "remoteUser": "root",
+  "postCreateCommand": "git config --global --add safe.directory /workspaces/sleepmeter"
+}
